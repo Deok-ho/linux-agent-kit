@@ -1,0 +1,15 @@
+name: Check shell scripts
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install shell static checker
+        run: sudo apt-get update && sudo apt-get install -y shellcheck
+      - name: Check syntax, static analysis, and mocked behavior
+        run: bash scripts/verify.sh

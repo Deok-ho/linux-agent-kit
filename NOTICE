@@ -1,0 +1,9 @@
+Linux Agent Kit
+Copyright 2026 Linux Agent Kit contributors
+
+The source in this repository is licensed under the Apache License, Version 2.0.
+
+Claude Code, Herdr, Tailscale, and PostgreSQL are separate products maintained by
+their respective owners. This project does not distribute their binaries,
+credentials, or account access, and is not endorsed by those projects.
+Downloaded software remains subject to its own license and service terms.
