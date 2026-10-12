@@ -3,7 +3,7 @@
 # Never installs software: OS, uid, packages, sudo, and downloads are mocked.
 set -Eeuo pipefail
 repo_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
-test_root=$(mktemp -d -t linux-agent-kit-tests.XXXXXXXX)
+test_root=$(command mktemp -d -t linux-agent-kit-tests.XXXXXXXX)
 trap 'rm -rf -- "$test_root"' EXIT
 # shellcheck source=install.sh
 source "$repo_dir/install.sh"

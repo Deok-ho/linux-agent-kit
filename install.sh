@@ -159,8 +159,16 @@ show_plan() {
   if ((${#missing_packages[@]})); then
     note "[설치 예정] sudo apt-get update; sudo apt-get install -y ${missing_packages[*]}"
   fi
-  $claude_present && note '[유지] 기존 Claude Code' || note '[설치 예정] https://claude.ai/install.sh → 파일 저장 → bash 파일 stable (일반 사용자)'
-  $herdr_present && note '[유지] 기존 Herdr' || note '[설치 예정] https://herdr.dev/install.sh → 파일 저장 → sh 파일 (일반 사용자)'
+  if $claude_present; then
+    note '[유지] 기존 Claude Code'
+  else
+    note '[설치 예정] https://claude.ai/install.sh → 파일 저장 → bash 파일 stable (일반 사용자)'
+  fi
+  if $herdr_present; then
+    note '[유지] 기존 Herdr'
+  else
+    note '[설치 예정] https://herdr.dev/install.sh → 파일 저장 → sh 파일 (일반 사용자)'
+  fi
   if $with_tailscale; then
     if $tailscale_present; then
       note '[유지] 기존 Tailscale, tailnet/ACL/로그인 설정'
@@ -170,7 +178,11 @@ show_plan() {
     fi
   fi
   if $with_postgres; then
-    $pg_present && note '[유지] 기존 PostgreSQL 클러스터/설정' || note '[설치 예정] sudo apt-get update; sudo apt-get install -y postgresql (Ubuntu 기본 저장소, 기본 로컬 설정)'
+    if $pg_present; then
+      note '[유지] 기존 PostgreSQL 클러스터/설정'
+    else
+      note '[설치 예정] sudo apt-get update; sudo apt-get install -y postgresql (Ubuntu 기본 저장소, 기본 로컬 설정)'
+    fi
   fi
   note '이 키트는 기존 설정/작업 폴더를 편집하지 않습니다. DB·지식 검색·MCP 구현은 후속 작업입니다.'
 }
@@ -252,6 +264,8 @@ apply_installation() {
   note '1. 새 터미널을 열고 bash doctor.sh로 실행 파일 경로를 확인하세요.'
   note '2. herdr를 실행하고, 그 안에서 claude를 실행해 본인 계정으로 로그인하세요.'
   if $with_tailscale; then note '3. 원격 접속이 필요하면 본인이 sudo tailscale up을 실행해 로그인하세요. 기존 tailnet 설정을 확인하세요.'; fi
+  # 사용자가 복사할 명령 예시이므로 HOME과 PATH를 여기서 확장하지 않습니다.
+  # shellcheck disable=SC2016
   note '일반 사용자 홈의 ~/.local/bin이 PATH에 없으면 현재 터미널에서만 export PATH="$HOME/.local/bin:$PATH"를 실행하세요.'
 }
 
