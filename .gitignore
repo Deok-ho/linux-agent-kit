@@ -1,0 +1,11 @@
+.env
+.env.*
+!.env.example
+*.log
+*.tmp
+*.swp
+.DS_Store
+__pycache__/
+.venv/
+node_modules/
+test-results/
